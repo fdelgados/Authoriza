@@ -1,0 +1,63 @@
+version: "3.4"
+
+services:
+  database:
+    container_name: authoriza-database
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+    expose:
+      - 5432
+
+  rabbitmq:
+    container_name: authoriza-rabbitmq
+    image: "rabbitmq:3.7-management"
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "5630:5672"
+      - "8090:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=codelytv
+      - RABBITMQ_DEFAULT_PASS=c0d3ly
+
+  elasticsearch:
+    container_name: authoriza-elasticsearch
+    image: "elasticsearch:6.8.4"
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+
+  java:
+    container_name: authoriza-java
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    platform: linux/amd64
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/dependency/BOOT-INF/lib:/app/lib
+      - ./target/dependency/META-INF:/app/META-INF
+      - ./target/classes:/app/classes
+    env_file:
+      - .env
+    tty: true
+    depends_on:
+      - database
+      - rabbitmq
+
+volumes:
+  db-data:
