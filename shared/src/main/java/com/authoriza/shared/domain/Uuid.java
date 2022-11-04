@@ -13,12 +13,12 @@ public abstract class Uuid implements Serializable {
         this.value = value;
     }
 
-    protected Uuid() {
-        value = UUID.randomUUID().toString();
-    }
-
     private void ensureIsValid(String value) throws IllegalArgumentException {
         UUID.fromString(value);
+    }
+
+    protected Uuid() {
+        value = UUID.randomUUID().toString();
     }
 
     public final String getValue() {
