@@ -2,7 +2,6 @@ package com.authoriza.identityaccess.application.domain.model;
 
 import com.authoriza.identityaccess.account.domain.model.ClientId;
 import com.authoriza.shared.domain.AggregateRoot;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 
 public final class Application extends AggregateRoot {
     private ApplicationId id;
