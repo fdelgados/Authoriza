@@ -1,4 +1,4 @@
-package com.authoriza.identityaccess;
+package com.authoriza;
 
 import com.authoriza.shared.domain.service.Service;
 import org.springframework.boot.SpringApplication;
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.FilterType;
         includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Service.class),
         value = {"com.authoriza.shared", "com.authoriza.identityaccess"}
 )
-public class AuthorizaApplication {
+public class Authoriza {
     public static void main(String[] args) {
-        SpringApplication.run(AuthorizaApplication.class, args);
+        SpringApplication.run(Authoriza.class, args);
     }
 }

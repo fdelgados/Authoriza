@@ -12,6 +12,7 @@
     <modules>
         <module>identityaccess</module>
         <module>shared</module>
+        <module>apps</module>
     </modules>
 
 </project>
