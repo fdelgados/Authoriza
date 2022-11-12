@@ -3,16 +3,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com</groupId>
-    <artifactId>authoriza-app</artifactId>
+    <groupId>com.authoriza</groupId>
+    <artifactId>authoriza</artifactId>
     <version>0.0.1</version>
-    <name>authoriza</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>identityaccess</module>
         <module>shared</module>
-        <module>apps</module>
+        <module>api</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>2.7.5</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
 </project>
