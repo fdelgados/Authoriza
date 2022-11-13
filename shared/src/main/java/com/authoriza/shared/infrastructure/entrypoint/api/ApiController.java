@@ -9,6 +9,7 @@ import com.authoriza.shared.domain.bus.query.Query;
 import com.authoriza.shared.domain.bus.query.QueryBus;
 import com.authoriza.shared.domain.bus.query.QueryHandlerExecutionError;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
@@ -19,6 +20,12 @@ public abstract class ApiController {
 
     @Autowired
     private CommandBus commandBus;
+
+    @Value("${api.base-url}")
+    private String baseUrl;
+
+    @Value("${api.version}")
+    private String version;
 
     private final HashMap<Class<? extends DomainError>, HttpStatus> errorMapping;
 
@@ -50,5 +57,13 @@ public abstract class ApiController {
 
     protected HashMap<Class<? extends DomainError>, HttpStatus> customErrorMapping() {
         return new HashMap<>();
+    }
+
+    protected String versionedUrl() {
+        return String.format("%s/%s", baseUrl, version);
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
     }
 }

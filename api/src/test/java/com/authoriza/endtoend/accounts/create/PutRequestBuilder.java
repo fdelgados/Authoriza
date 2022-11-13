@@ -17,7 +17,7 @@ class PutRequestBuilder {
         password = null;
     }
 
-    static PutRequestBuilder random() {
+    static PutRequestBuilder complete() {
         PutRequestBuilder builder = new PutRequestBuilder();
 
         return builder.withId().withEmail().withPassword();
@@ -43,6 +43,10 @@ class PutRequestBuilder {
         this.id = "";
 
         return this;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     PutRequestBuilder withEmail(String email) {

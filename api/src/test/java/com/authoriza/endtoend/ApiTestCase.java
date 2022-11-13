@@ -1,5 +1,6 @@
 package com.authoriza.endtoend;
 
+import com.github.javafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,13 @@ public abstract class ApiTestCase {
     @Autowired
     protected MockMvc mockMvc;
 
+    protected Faker faker;
+
     private MockHttpServletRequestBuilder request;
+
+    public ApiTestCase() {
+        faker = new Faker();
+    }
 
     protected RequestResult post(String uri, HashMap<String, Object> parameters) {
         try {

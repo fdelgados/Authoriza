@@ -10,8 +10,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-@RequestMapping("/api/v0/identity-access/")
+@RequestMapping("/api/${api.version}/accounts")
 public @interface AccountsApiPrefix {
     @AliasFor(annotation = Component.class)
     String value() default "";
+
+    String prefix() default "accounts";
 }
