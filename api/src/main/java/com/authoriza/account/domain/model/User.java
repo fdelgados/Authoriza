@@ -2,6 +2,8 @@ package com.authoriza.account.domain.model;
 
 import com.authoriza.shared.domain.PersonName;
 
+import java.time.LocalDateTime;
+
 final class User {
     private final UserId id;
     private final PersonName name;
@@ -9,6 +11,7 @@ final class User {
     private String password;
     private final boolean isAdmin;
     private final Account account;
+    private final LocalDateTime createdAt;
 
     public User() {
         id = null;
@@ -16,6 +19,7 @@ final class User {
         email = null;
         isAdmin = false;
         account = null;
+        createdAt = null;
     }
 
     private User(UserEmail email, String password, boolean isAdmin, PersonName name, Account account) {
@@ -25,6 +29,7 @@ final class User {
         this.name = name;
         this.isAdmin = isAdmin;
         this.account = account;
+        createdAt = LocalDateTime.now();
     }
 
     private User(UserEmail email, String password, boolean isAdmin, Account account) {
@@ -34,6 +39,7 @@ final class User {
         this.name = null;
         this.isAdmin = isAdmin;
         this.account = account;
+        createdAt = LocalDateTime.now();
     }
 
     public static User create(UserEmail email, String password, PersonName name, Account account) {

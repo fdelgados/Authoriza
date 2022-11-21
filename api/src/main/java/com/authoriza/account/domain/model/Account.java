@@ -2,6 +2,7 @@ package com.authoriza.account.domain.model;
 
 import com.authoriza.shared.domain.AggregateRoot;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,8 @@ public final class Account extends AggregateRoot {
     private User admin;
     private Set<User> users;
     private ClientSecret clientSecret;
+    private String companyName;
+    private LocalDateTime createdAt;
 
     public Account() {
         id = null;
@@ -22,6 +25,7 @@ public final class Account extends AggregateRoot {
         users = new HashSet<>(0);
         clientId = ClientId.create();
         clientSecret = ClientSecret.create();
+        createdAt = LocalDateTime.now();
         createAdminUser(adminEmail, adminPassword);
     }
 

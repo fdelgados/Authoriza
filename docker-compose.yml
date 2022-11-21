@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: ${DATABASE_USER:-authoriza}
     volumes:
       - db-data:/var/lib/postgresql/data:rw
-      - ./src/api/src/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./api/src/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - authoriza
 

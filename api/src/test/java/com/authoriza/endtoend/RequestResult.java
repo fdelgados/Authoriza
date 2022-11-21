@@ -69,6 +69,12 @@ public class RequestResult {
         return this;
     }
 
+    public final RequestResult assertConflict() throws Exception {
+        this.result.andExpect(status().isConflict());
+
+        return this;
+    }
+
     public final RequestResult assertLocation(String expectedLocation) throws Exception {
         this.result.andExpect(header().string(HttpHeaders.LOCATION, is(expectedLocation)));
 

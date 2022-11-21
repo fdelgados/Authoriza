@@ -14,6 +14,8 @@
         <component name="clientSecret" class="com.authoriza.account.domain.model.ClientSecret" access="field">
             <property name="value" access="field" column="client_secret" type="string" length="64"/>
         </component>
+        <property name="companyName" column="company_name" access="field" type="string" length="100" not-null="false" />
+        <property name="createdAt" column="created_at" access="field" not-null="true" />
         <set name="users" cascade="save-update" inverse="true" access="field">
             <key>
                 <column name="account_id" not-null="true" />

@@ -5,16 +5,20 @@ CREATE DATABASE authoriza
     ENCODING = 'UTF8'
     OWNER = authoriza;
 
-CREATE TABLE IF NOT EXISTS accounts
+DROP TABLE accounts;
+CREATE TABLE accounts
 (
     id UUID NOT NULL CONSTRAINT accounts_pk PRIMARY KEY,
     client_id CHAR(32) UNIQUE NOT NULL,
     client_secret CHAR(64) UNIQUE NOT NULL,
+    company_name VARCHAR(100),
+    created_at TIMESTAMP NOT NULL
 );
 
 ALTER TABLE accounts
     OWNER TO authoriza;
 
+DROP TABLE users;
 CREATE TABLE IF NOT EXISTS users
 (
     id UUID NOT NULL CONSTRAINT users_pk PRIMARY KEY,
@@ -24,6 +28,7 @@ CREATE TABLE IF NOT EXISTS users
     account_id UUID NOT NULL,
     first_name VARCHAR(60),
     last_name VARCHAR(120),
+    created_at TIMESTAMP NOT NULL,
     CONSTRAINT accounts_fk FOREIGN KEY (account_id)
     REFERENCES accounts (id)
     ON DELETE CASCADE

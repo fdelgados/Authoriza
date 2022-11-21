@@ -18,6 +18,7 @@
             <property name="lastName" access="field" column="last_name" type="string" length="120"/>
         </component>
         <property name="isAdmin" type="boolean" column="is_admin" access="field" />
+        <property name="createdAt" column="created_at" not-null="true" access="field" />
         <many-to-one name="account" class="com.authoriza.account.domain.model.Account" access="field">
             <column name="account_id" not-null="true" sql-type="pg-uuid" />
         </many-to-one>
