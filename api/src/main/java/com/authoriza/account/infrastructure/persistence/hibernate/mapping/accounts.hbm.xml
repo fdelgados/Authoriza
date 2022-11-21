@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.authoriza.account.domain.model.Account" table="accounts">
+        <composite-id name="id" class="com.authoriza.account.domain.model.AccountId" access="field">
+            <key-property column="id" name="id" access="field" />
+        </composite-id>
+        <component name="clientId" class="com.authoriza.account.domain.model.ClientId" access="field">
+            <property name="value" column="client_id" type="string" access="field" length="32" />
+        </component>
+        <component name="clientSecret" class="com.authoriza.account.domain.model.ClientSecret" access="field">
+            <property name="value" access="field" column="client_secret" type="string" length="64"/>
+        </component>
+        <set name="users" cascade="save-update" inverse="true" access="field">
+            <key>
+                <column name="account_id" not-null="true" />
+            </key>
+            <one-to-many class="com.authoriza.account.domain.model.User" />
+        </set>
+    </class>
+</hibernate-mapping>

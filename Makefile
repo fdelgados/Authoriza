@@ -10,10 +10,7 @@ up:
 
 
 .PHONY: reload
-reload: compile deps
-
-deps:
-	mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+reload: compile
 
 .PHONY: compile
 compile:

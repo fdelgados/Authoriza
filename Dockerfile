@@ -1,13 +1,16 @@
 FROM eclipse-temurin:17-jdk-focal
-RUN useradd -s /bin/bash -m authoriza && groupadd dev && usermod -aG dev authoriza
-USER authoriza:dev
+#RUN useradd -s /bin/bash -m authoriza && groupadd dev && usermod -aG dev authoriza
+#USER authoriza:dev
 
 WORKDIR /app
 
-RUN mkdir src
-RUN mkdir lib
-RUN mkdir META-INF
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
 
-COPY src ./src
+COPY api ./api
+COPY shared ./shared
 
-ENTRYPOINT ["java", "-Dspring.devtools.restart.enabled=true", "-cp","/app/classes:/app/lib/*","com.authoriza.AuthorizaApplication"]
+RUN #./mvnw dependency:go-offline
+RUN ./mvnw clean install
+
+CMD ["./mvnw", "spring-boot:run", "-pl", ":authoriza-api"]

@@ -9,17 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>src/shared</module>
-        <module>src/api</module>
+        <module>shared</module>
+        <module>api</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <version>2.7.5</version>
-            <scope>runtime</scope>
-        </dependency>
-    </dependencies>
-
 </project>

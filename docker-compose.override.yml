@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  database:
+    ports:
+      - "5431:5432"
+
+  redis:
+    ports:
+      - "16379:6379"
+
+  mailcatcher:
+    ports:
+      - "11080:1080"
+      - "11025:1025"
