@@ -9,7 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>shared</module>
-        <module>api</module>
+        <module>src/shared</module>
+        <module>src/api</module>
+        <module>src/events</module>
     </modules>
 </project>

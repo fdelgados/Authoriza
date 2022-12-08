@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.authoriza.events.domain.model.DomainEvent" table="domain_events">
+        <composite-id name="id" class="com.authoriza.events.domain.model.DomainEventId" access="field">
+            <key-property column="id" name="id" access="field" />
+        </composite-id>
+
+        <component name="aggregateId" class="com.authoriza.events.domain.model.DomainEventAggregateId" access="field">
+            <property name="id" access="field" column="aggregate_id" not-null="true" />
+        </component>
+        <component name="type" class="com.authoriza.events.domain.model.DomainEventType" access="field">
+            <property name="value" access="field" column="type" type="string" length="255" not-null="true" />
+        </component>
+        <property name="version" access="field" column="version" type="integer" not-null="true" />
+        <property name="data" access="field" column="data" not-null="true" />
+        <property name="occurredOn" column="occurred_on" access="field" not-null="true" />
+    </class>
+</hibernate-mapping>

@@ -10,7 +10,22 @@ services:
       POSTGRES_USER: ${DATABASE_USER:-authoriza}
     volumes:
       - db-data:/var/lib/postgresql/data:rw
-      - ./api/src/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/api/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - authoriza
+
+  event_store:
+    container_name: authoriza-event_store
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    env_file:
+      - src/events/main/resources/.env
+    environment:
+      POSTGRES_DB: ${EVENTS_DATABASE_NAME:-event_store}
+      POSTGRES_PASSWORD: ${EVENTS_DATABASE_PASSWORD:-w135HkeGXg}
+      POSTGRES_USER: ${EVENTS_DATABASE_USER:-event_store}
+    volumes:
+      - db-events-data:/var/lib/postgresql/data:rw
+      - ./src/events/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - authoriza
 
@@ -51,12 +66,13 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - api/src/main/resources/.env
+      - src/api/main/resources/.env
     tty: true
     networks:
       - authoriza
     depends_on:
       - database
+      - event_store
       - rabbitmq
 
   redis:
@@ -77,3 +93,4 @@ networks:
 
 volumes:
   db-data:
+  db-events-data:

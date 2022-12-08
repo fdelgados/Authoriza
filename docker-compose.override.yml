@@ -4,6 +4,9 @@ services:
   database:
     ports:
       - "5431:5432"
+  event_store:
+    ports:
+      - "5430:5432"
 
   redis:
     ports:
