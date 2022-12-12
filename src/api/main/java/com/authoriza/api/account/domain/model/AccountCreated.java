@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Objects;
 
 public final class AccountCreated extends DomainEvent {
     private final String clientId;
@@ -57,7 +58,7 @@ public final class AccountCreated extends DomainEvent {
 
     @Override
     public HashMap<String, Serializable> toPrimitives() {
-        return new HashMap<>() {{
+        return new HashMap<String, Serializable>() {{
             put("client_id", clientId);
             put("admin_email", adminEmail);
         }};
@@ -80,5 +81,18 @@ public final class AccountCreated extends DomainEvent {
                 (String) body.get("client_id"),
                 (String) body.get("admin_email")
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccountCreated that = (AccountCreated) o;
+        return Objects.equals(clientId, that.clientId) && Objects.equals(adminEmail, that.adminEmail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, adminEmail);
     }
 }

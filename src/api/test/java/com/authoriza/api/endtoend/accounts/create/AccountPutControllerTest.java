@@ -6,11 +6,9 @@ import com.authoriza.api.endtoend.ApiTestCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.jdbc.Sql;
 
 
 @WebMvcTest(AccountPutController.class)
-@Sql(scripts = {"/database/schema.sql", "/database/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class AccountPutControllerTest extends ApiTestCase {
     private static final String URI = "/api/v0/accounts";
 

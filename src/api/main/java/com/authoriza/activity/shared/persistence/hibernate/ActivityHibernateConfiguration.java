@@ -1,4 +1,4 @@
-package com.authoriza.api.shared.persistence.hibernate;
+package com.authoriza.activity.shared.persistence.hibernate;
 
 import com.authoriza.shared.infrastructure.hibernate.HibernateConfigurationFactory;
 import org.springframework.context.annotation.Bean;
@@ -11,33 +11,33 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-public class ApiHibernateConfiguration {
+public class ActivityHibernateConfiguration {
     private static final String PACKAGE_NAME = "authoriza";
     private static final String CONTEXT_NAME = "api";
-    private static final String MODULE_NAME = "api";
+    private static final String MODULE_NAME = "activity";
 
     private final HibernateConfigurationFactory factory;
-    private final ApiConfigurationProperties properties;
+    private final ActivityConfigurationProperties properties;
 
-    public ApiHibernateConfiguration(
+    public ActivityHibernateConfiguration(
             HibernateConfigurationFactory factory,
-            ApiConfigurationProperties properties
+            ActivityConfigurationProperties properties
     ) {
         this.factory = factory;
         this.properties = properties;
     }
 
-    @Bean("authoriza-api-transaction_manager")
+    @Bean("authoriza-activity-transaction_manager")
     public PlatformTransactionManager hibernateTransactionManager() {
         return factory.hibernateTransactionManager(sessionFactory());
     }
 
-    @Bean("authoriza-api-session_factory")
+    @Bean("authoriza-activity-session_factory")
     public LocalSessionFactoryBean sessionFactory() {
         return factory.sessionFactory(dataSource(), CONTEXT_NAME, PACKAGE_NAME, MODULE_NAME);
     }
 
-    @Bean("authoriza-api-data_source")
+    @Bean("authoriza-activity-data_source")
     public DataSource dataSource() {
         return factory.dataSource(
                 properties.getDriverClassName(),

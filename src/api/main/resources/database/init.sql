@@ -5,8 +5,7 @@ CREATE DATABASE authoriza
     ENCODING = 'UTF8'
     OWNER = authoriza;
 
-DROP TABLE accounts;
-CREATE TABLE accounts
+CREATE TABLE IF NOT EXISTS authoriza.accounts
 (
     id UUID NOT NULL CONSTRAINT accounts_pk PRIMARY KEY,
     client_id CHAR(32) UNIQUE NOT NULL,
@@ -15,11 +14,10 @@ CREATE TABLE accounts
     created_at TIMESTAMP NOT NULL
 );
 
-ALTER TABLE accounts
+ALTER TABLE authoriza.accounts
     OWNER TO authoriza;
 
-DROP TABLE users;
-CREATE TABLE IF NOT EXISTS users
+CREATE TABLE IF NOT EXISTS authoriza.users
 (
     id UUID NOT NULL CONSTRAINT users_pk PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -35,5 +33,5 @@ CREATE TABLE IF NOT EXISTS users
     ON UPDATE CASCADE
 );
 
-ALTER TABLE users
+ALTER TABLE authoriza.users
     OWNER TO authoriza;

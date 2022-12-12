@@ -14,18 +14,16 @@ services:
     networks:
       - authoriza
 
-  event_store:
-    container_name: authoriza-event_store
+  activity:
+    container_name: authoriza-activity-database
     image: postgres:${POSTGRES_VERSION:-14}-alpine
-    env_file:
-      - src/events/main/resources/.env
     environment:
-      POSTGRES_DB: ${EVENTS_DATABASE_NAME:-event_store}
+      POSTGRES_DB: ${EVENTS_DATABASE_NAME:-activity}
       POSTGRES_PASSWORD: ${EVENTS_DATABASE_PASSWORD:-w135HkeGXg}
-      POSTGRES_USER: ${EVENTS_DATABASE_USER:-event_store}
+      POSTGRES_USER: ${EVENTS_DATABASE_USER:-activity}
     volumes:
       - db-events-data:/var/lib/postgresql/data:rw
-      - ./src/events/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/api/main/resources/database/activity/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - authoriza
 
@@ -72,7 +70,7 @@ services:
       - authoriza
     depends_on:
       - database
-      - event_store
+      - activity
       - rabbitmq
 
   redis:

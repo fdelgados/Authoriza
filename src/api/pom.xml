@@ -15,7 +15,7 @@
     <description>Api for Authoriza application</description>
     <properties>
         <java.version>17</java.version>
-        <start-class>com.authoriza.api.ApiApplication</start-class>
+        <start-class>com.authoriza.AuthorizaApplication</start-class>
     </properties>
     <dependencies>
         <dependency>

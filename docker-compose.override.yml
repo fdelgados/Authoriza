@@ -4,7 +4,7 @@ services:
   database:
     ports:
       - "5431:5432"
-  event_store:
+  activity:
     ports:
       - "5430:5432"
 

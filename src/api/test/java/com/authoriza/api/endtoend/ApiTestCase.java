@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -16,6 +19,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @AutoConfigureMockMvc
+@SqlGroup({
+        @Sql(scripts = {"/database/schema.sql", "/database/data.sql"}, config = @SqlConfig(dataSource = "authoriza-api-data_source", transactionManager = "authoriza-api-transaction_manager"), executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(scripts = "/database/activity/schema.sql", config = @SqlConfig(dataSource = "authoriza-activity-data_source", transactionManager = "authoriza-activity-transaction_manager"), executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+})
 public abstract class ApiTestCase {
     @Autowired
     protected MockMvc mockMvc;
@@ -90,7 +97,7 @@ public abstract class ApiTestCase {
 
         uriQueryString.append("?");
         for (String key: parameters.keySet()) {
-            StringBuilder param = new StringBuilder("");
+            StringBuilder param = new StringBuilder();
             paramTemplate.add(param.append(key).append("=").append("{").append(key).append("}").toString());
         }
         uriQueryString.append(StringUtils.join(paramTemplate));

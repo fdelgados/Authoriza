@@ -24,11 +24,16 @@ public class HibernateConfigurationFactory {
         return transactionManager;
     }
 
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource, String contextName, String packageName) {
+    public LocalSessionFactoryBean sessionFactory(
+            DataSource dataSource,
+            String contextName,
+            String applicationName,
+            String moduleName
+    ) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
 
-        List<Resource> mappingFiles = searchMappingFiles(contextName, packageName);
+        List<Resource> mappingFiles = searchMappingFiles(contextName, applicationName, moduleName);
 
         sessionFactory.setMappingLocations(mappingFiles.toArray(new Resource[mappingFiles.size()]));
 
@@ -45,8 +50,8 @@ public class HibernateConfigurationFactory {
         return dataSource;
     }
 
-    private List<Resource> searchMappingFiles(String contextName, String packageName) {
-        List<String> modules = findModulesPaths(contextName, packageName);
+    private List<Resource> searchMappingFiles(String contextName, String applicationName, String moduleName) {
+        List<String> modules = findModulesPaths(contextName, applicationName, moduleName);
         List<String> goodPaths = new ArrayList<>();
 
         for (String module : modules) {
@@ -60,12 +65,12 @@ public class HibernateConfigurationFactory {
         return goodPaths.stream().map(FileSystemResource::new).collect(Collectors.toList());
     }
 
-    private List<String> findModulesPaths(String contextName, String packageName) {
-        String path = String.format("./src/%s/main/java/com/%s/%s/", contextName, packageName, contextName);
+    private List<String> findModulesPaths(String contextName, String applicationName, String moduleName) {
+        String path = String.format("./src/%s/main/java/com/%s/%s/", contextName, applicationName, moduleName);
         String[] files = new File(path).list((current, name) -> new File(current, name).isDirectory());
 
         if (null == files) {
-            path  = String.format("./main/java/com/%s/%s/", packageName, contextName);
+            path  = String.format("./main/java/com/%s/%s/", applicationName, moduleName);
             files = new File(path).list((current, name) -> new File(current, name).isDirectory());
         }
 

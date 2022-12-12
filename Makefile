@@ -28,14 +28,14 @@ stop:
 build:
 	@./mvnw package
 
-#.PHONY: run-tests
-#run-tests:
-#	@./gradlew test --warning-mode all
-#
-#.PHONY: test
-#test:
-#	@docker exec codelytv-ddd_skeleton-java ./gradlew test --warning-mode all
-#
-#.PHONY: run
-#run:
-#	@./gradlew :run
+.PHONY: run-tests
+run-tests:
+	@./mvnw test
+
+.PHONY: test
+test:
+	@docker exec authoriza-app ./mvnw test
+
+.PHONY: run
+run:
+	@./mvnw spring-boot:run -pl :authoriza-api
